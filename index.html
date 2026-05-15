@@ -10,7 +10,6 @@
 <style>
 :root{--bg:#000;--surface:#0a0a0a;--surface2:#111;--surface3:#1a1a1a;--border:rgba(0,200,255,0.1);--border2:rgba(0,200,255,0.2);--accent:#00c8ff;--accent2:#ff2d55;--accent3:#00ff88;--text:#f0f0f0;--muted:#555;--muted2:#333;--r:12px;--r-lg:18px}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#1a1a1a;border-radius:2px}
 .bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(0,200,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,255,0.03) 1px,transparent 1px);background-size:40px 40px}
@@ -18,7 +17,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .wrap{max-width:1200px;margin:0 auto;padding:0 24px;width:100%}
 .hdr{padding:14px 0;border-bottom:1px solid var(--border2);position:sticky;top:0;z-index:100;background:rgba(0,0,0,0.95);backdrop-filter:blur(20px)}
 .hdr-in{display:flex;align-items:center;justify-content:space-between;gap:16px}
-.logo{display:flex;align-items:center;gap:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;color:var(--text);text-decoration:none}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;color:var(--text)}
 .logo-mark{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(0,200,255,0.4)}
 .logo-mark i{color:#000;font-size:14px}
 .logo em{color:var(--accent);font-style:normal}
@@ -32,7 +31,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .tab-count{font-size:10px;padding:1px 6px;border-radius:8px;background:rgba(0,0,0,0.2);min-width:18px;text-align:center}
 .page{display:none;flex:1;flex-direction:column}.page.active{display:flex}
 .hero{padding:44px 0 28px;text-align:center}
-.chip{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding:6px 18px;border-radius:20px;border:1px solid rgba(0,200,255,0.25);background:rgba(0,200,255,0.05);margin-bottom:22px}
+.chip{display:inline-flex;align-items:center;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding:6px 18px;border-radius:20px;border:1px solid rgba(0,200,255,0.25);background:rgba(0,200,255,0.05);margin-bottom:22px}
 .hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(28px,5vw,52px);font-weight:800;line-height:1.1;letter-spacing:-1.5px;margin-bottom:14px}
 .grad{background:linear-gradient(135deg,#00c8ff 0%,#fff 55%,#00ff88 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero p{color:var(--muted);font-size:14px;max-width:460px;margin:0 auto;line-height:1.8}
@@ -54,8 +53,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .btn-g:hover{border-color:var(--accent);color:var(--accent)}
 .btn-d{background:rgba(255,45,85,0.08);color:var(--accent2);border:1px solid rgba(255,45,85,0.2)}
 .btn-d:hover{background:rgba(255,45,85,0.15)}
-.btn-sm{padding:7px 12px;font-size:11px}
-.btn i{font-size:13px}
+.btn-sm{padding:7px 12px;font-size:11px}.btn i{font-size:13px}
 .timer-row{display:flex;align-items:center;gap:12px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
 .timer-lbl{font-size:11px;font-weight:500;color:var(--muted);white-space:nowrap}
 .timer-bar{flex:1;height:2px;background:var(--surface3);border-radius:2px;overflow:hidden}
@@ -64,7 +62,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
 .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px}
 .stat-v{font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;font-weight:800}
-.c-b{color:var(--accent);text-shadow:0 0 20px rgba(0,200,255,0.3)}.c-g{color:var(--accent3)}.c-r{color:var(--accent2)}.c-y{color:#ffaa00}
+.c-b{color:var(--accent)}.c-g{color:var(--accent3)}.c-r{color:var(--accent2)}.c-y{color:#ffaa00}
 .stat-l{font-size:11px;color:var(--muted);margin-top:6px;font-weight:500}
 .grid{display:grid;grid-template-columns:320px 1fr;gap:16px;flex:1;margin-bottom:24px}
 .panel{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r-lg);overflow:hidden;display:flex;flex-direction:column;min-height:500px}
@@ -96,11 +94,11 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .mk{color:var(--muted);min-width:36px;font-weight:500}.mv{color:var(--muted)}
 .reader-acts{display:flex;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
 .reader-body{flex:1;overflow-y:auto;padding:24px;font-size:13px;line-height:1.9;color:#aaa}
-.spin{display:inline-block;width:15px;height:15px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spinning .7s linear infinite}
-@keyframes spinning{to{transform:rotate(360deg)}}
+.spin{display:inline-block;width:15px;height:15px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);padding:12px 20px;display:flex;align-items:center;gap:10px;font-size:12px;font-weight:500;z-index:9999;transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .4s;opacity:0;pointer-events:none;white-space:nowrap}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-.t-ic{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:circle;font-size:11px;flex-shrink:0}
+.t-ic{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
 .t-s{background:rgba(0,255,136,.12);color:var(--accent3)}.t-e{background:rgba(255,45,85,.12);color:var(--accent2)}.t-i{background:rgba(0,200,255,.12);color:var(--accent)}
 .pg-hdr{padding:28px 0 16px;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px}
 .pg-hdr h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800}
@@ -125,8 +123,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .toggle{width:38px;height:20px;background:var(--surface3);border-radius:10px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;border:none}
 .toggle.on{background:var(--accent)}.toggle::after{content:'';position:absolute;width:14px;height:14px;background:#fff;border-radius:50%;top:3px;left:3px;transition:left .2s}.toggle.on::after{left:21px}
 .sel-in{background:var(--surface2);border:1px solid var(--border2);color:var(--text);border-radius:9px;padding:7px 12px;font-family:'Inter',sans-serif;font-size:12px;cursor:pointer}
-.loading-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
-.loading-overlay p{color:var(--accent);font-size:13px;font-weight:500}
 footer{border-top:1px solid var(--border);padding:16px 0;text-align:center;color:var(--muted2);font-size:11px}
 footer span{color:var(--accent)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
@@ -137,8 +133,7 @@ footer span{color:var(--accent)}
 </head>
 <body>
 <div class="bg-grid"></div>
-<div class="app">
-<div class="wrap">
+<div class="app"><div class="wrap">
 
 <header class="hdr fu">
   <div class="hdr-in">
@@ -159,22 +154,21 @@ footer span{color:var(--accent)}
     <h1>Temporary Email<br><span class="grad">Instant Inbox</span></h1>
     <p>Perfect for your office — no phone number, no signup required. Receive real emails instantly.</p>
   </div>
-
   <div class="card fu fu2">
     <div class="card-top">
       <div class="card-label">Your Active Email Address</div>
-      <button class="btn btn-g btn-sm" onclick="generateEmail()"><i class="fas fa-random"></i> Generate New</button>
+      <button class="btn btn-g btn-sm" onclick="newEmail()"><i class="fas fa-random"></i> Generate New</button>
     </div>
     <div class="email-box" onclick="copyEmail()">
       <i class="fas fa-envelope"></i>
-      <div class="email-addr" id="email-display">Creating your inbox...</div>
+      <div class="email-addr" id="email-display">Loading...</div>
       <span class="copy-hint"><i class="fas fa-copy"></i> click to copy</span>
       <div class="copy-flash" id="copy-flash"></div>
     </div>
     <div class="btn-row">
       <button class="btn btn-p" onclick="copyEmail()"><i class="fas fa-copy"></i> Copy Email</button>
       <button class="btn btn-g" id="refresh-btn" onclick="checkInbox()"><i class="fas fa-sync-alt"></i> Check Inbox</button>
-      <button class="btn btn-g" onclick="addTeamEmail();switchPage('team')"><i class="fas fa-plus"></i> Add to Team</button>
+      <button class="btn btn-g" onclick="addTeam()"><i class="fas fa-plus"></i> Add to Team</button>
       <button class="btn btn-d" onclick="clearInbox()"><i class="fas fa-trash"></i> Clear</button>
     </div>
     <div class="timer-row">
@@ -184,285 +178,211 @@ footer span{color:var(--accent)}
       <span class="timer-num" id="timer-num">60:00</span>
     </div>
   </div>
-
   <div class="stats fu fu3">
-    <div class="stat"><div class="stat-v c-b" id="stat-gen">0</div><div class="stat-l">Generated</div></div>
-    <div class="stat"><div class="stat-v c-g" id="stat-recv">0</div><div class="stat-l">Received</div></div>
-    <div class="stat"><div class="stat-v c-r" id="stat-unread">0</div><div class="stat-l">Unread</div></div>
+    <div class="stat"><div class="stat-v c-b" id="sg">0</div><div class="stat-l">Generated</div></div>
+    <div class="stat"><div class="stat-v c-g" id="sr">0</div><div class="stat-l">Received</div></div>
+    <div class="stat"><div class="stat-v c-r" id="su">0</div><div class="stat-l">Unread</div></div>
     <div class="stat"><div class="stat-v c-y">INF</div><div class="stat-l">No Limits</div></div>
   </div>
-
   <div class="grid fu fu4">
     <div class="panel">
       <div class="panel-h">
-        <div class="panel-t"><i class="fas fa-inbox"></i> Inbox <span class="bdg" id="inbox-bdg" style="display:none">0</span></div>
+        <div class="panel-t"><i class="fas fa-inbox"></i> Inbox <span class="bdg" id="bdg" style="display:none">0</span></div>
         <button class="icon-btn" onclick="checkInbox()"><i class="fas fa-sync-alt"></i></button>
       </div>
       <div class="mail-scroll" id="mail-list">
-        <div class="empty"><div class="empty-ico"><i class="fas fa-inbox"></i></div><p>Your inbox is empty. Use this email address on any website to receive messages here.</p></div>
+        <div class="empty"><div class="empty-ico"><i class="fas fa-inbox"></i></div><p>Your inbox is empty. Use this email on any website to receive messages here.</p></div>
       </div>
     </div>
     <div class="panel">
-      <div class="reader-empty" id="reader-empty"><div class="big-i"><i class="fas fa-envelope-open"></i></div><p>Select an email from your inbox to read it here.</p></div>
+      <div class="reader-empty" id="reader-empty"><div class="big-i"><i class="fas fa-envelope-open"></i></div><p>Select an email to read it here.</p></div>
       <div id="reader-content" style="display:none;flex-direction:column;flex:1;overflow:hidden"></div>
     </div>
   </div>
 </div>
 
 <div class="page" id="page-team">
-  <div class="pg-hdr"><div><div class="chip" style="display:inline-flex;margin-bottom:10px">Team Mode</div><h2>Manage Multiple Emails</h2><p>Create separate temporary emails for your entire team.</p></div><button class="btn btn-p" onclick="addTeamEmail()"><i class="fas fa-plus"></i> Add New Email</button></div>
+  <div class="pg-hdr"><div><div class="chip" style="display:inline-flex;margin-bottom:10px">Team Mode</div><h2>Manage Multiple Emails</h2><p>Create separate temporary emails for your entire team.</p></div><button class="btn btn-p" onclick="addTeam()"><i class="fas fa-plus"></i> Add New Email</button></div>
   <div class="team-grid" id="team-grid"></div>
 </div>
 
 <div class="page" id="page-history">
-  <div class="pg-hdr"><div><div class="chip" style="display:inline-flex;margin-bottom:10px">History</div><h2>Email History</h2><p>View and reuse previously generated email addresses.</p></div><button class="btn btn-d" onclick="clearHistory()"><i class="fas fa-trash"></i> Clear History</button></div>
+  <div class="pg-hdr"><div><div class="chip" style="display:inline-flex;margin-bottom:10px">History</div><h2>Email History</h2><p>View previously generated email addresses.</p></div><button class="btn btn-d" onclick="clearHist()"><i class="fas fa-trash"></i> Clear</button></div>
   <div class="hist-list" id="hist-list"></div>
 </div>
 
 <div class="page" id="page-settings">
-  <div class="pg-hdr"><div><div class="chip" style="display:inline-flex;margin-bottom:10px">Settings</div><h2>App Settings</h2><p>Customize the app to fit your workflow.</p></div></div>
+  <div class="pg-hdr"><div><div class="chip" style="display:inline-flex;margin-bottom:10px">Settings</div><h2>App Settings</h2></div></div>
   <div class="set-wrap">
     <div class="set-sec">
       <div class="set-title"><i class="fas fa-sync-alt"></i> Auto Refresh</div>
-      <div class="set-row"><div><div class="set-lbl">Enable Auto Refresh</div><div class="set-desc">Automatically check inbox for new emails</div></div><button class="toggle on" id="toggle-autoRefresh" onclick="toggleSetting('autoRefresh')"></button></div>
-      <div class="set-row"><div><div class="set-lbl">Refresh Interval</div><div class="set-desc">How often to check for new emails</div></div><select class="sel-in" onchange="setRefreshRate(this.value)"><option value="10">Every 10 seconds</option><option value="15" selected>Every 15 seconds</option><option value="30">Every 30 seconds</option><option value="60">Every minute</option></select></div>
+      <div class="set-row"><div><div class="set-lbl">Enable Auto Refresh</div><div class="set-desc">Automatically check inbox for new emails</div></div><button class="toggle on" id="tog-ar" onclick="togSet('ar')"></button></div>
+      <div class="set-row"><div><div class="set-lbl">Refresh Interval</div></div><select class="sel-in" onchange="setRate(this.value)"><option value="10">Every 10s</option><option value="15" selected>Every 15s</option><option value="30">Every 30s</option><option value="60">Every 1 min</option></select></div>
     </div>
     <div class="set-sec">
-      <div class="set-title"><i class="fas fa-hourglass-half"></i> Email Expiry</div>
-      <div class="set-row"><div><div class="set-lbl">Auto Expire</div><div class="set-desc">Generate a new email automatically after expiry</div></div><button class="toggle on" id="toggle-autoExpire" onclick="toggleSetting('autoExpire')"></button></div>
-      <div class="set-row"><div><div class="set-lbl">Expiry Duration</div></div><select class="sel-in" onchange="setExpireMinutes(this.value)"><option value="30">30 minutes</option><option value="60" selected>1 hour</option><option value="120">2 hours</option></select></div>
+      <div class="set-title"><i class="fas fa-hourglass-half"></i> Expiry</div>
+      <div class="set-row"><div><div class="set-lbl">Auto Expire</div><div class="set-desc">Generate new email after expiry</div></div><button class="toggle on" id="tog-ae" onclick="togSet('ae')"></button></div>
+      <div class="set-row"><div><div class="set-lbl">Expiry Duration</div></div><select class="sel-in" onchange="setExp(this.value)"><option value="30">30 min</option><option value="60" selected>1 hour</option><option value="120">2 hours</option></select></div>
     </div>
     <div class="set-sec">
       <div class="set-title"><i class="fas fa-info-circle"></i> About</div>
-      <div class="set-row"><div><div class="set-lbl">DropMail Pro</div><div class="set-desc">Powered by Mail.tm API — Free, unlimited, no signup required</div></div><span style="color:var(--accent);font-size:12px;font-weight:600">v3.0</span></div>
+      <div class="set-row"><div><div class="set-lbl">DropMail Pro v3.0</div><div class="set-desc">Powered by Guerrilla Mail — Free, unlimited, no signup</div></div><span style="color:var(--accent);font-weight:600;font-size:12px">v3.0</span></div>
     </div>
   </div>
 </div>
 
-<footer>DropMail Pro &nbsp;&middot;&nbsp; Powered by <span>Mail.tm API</span> &nbsp;&middot;&nbsp; Free &middot; Unlimited &middot; No Signup</footer>
-</div>
-</div>
+<footer>DropMail Pro &nbsp;&middot;&nbsp; Powered by <span>Guerrilla Mail</span> &nbsp;&middot;&nbsp; Free &middot; Unlimited &middot; No Signup</footer>
+</div></div>
 
-<div class="toast" id="toast">
-  <div class="t-ic t-i" id="t-ic"><i class="fas fa-info" id="t-fa"></i></div>
-  <span id="t-msg"></span>
-</div>
+<div class="toast" id="toast"><div class="t-ic t-i" id="t-ic"><i class="fas fa-info" id="t-fa"></i></div><span id="t-msg"></span></div>
 
 <script>
-// ── Mail.tm API (supports CORS) ──────────────────────────
-const MT = 'https://api.mail.tm';
+const GML = 'https://api.guerrillamail.com/ajax.php';
 const $ = id => document.getElementById(id);
 const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-const fmtDate = dt => { try { return new Date(dt).toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}); } catch { return dt||''; }};
-const randStr = l => { const c='abcdefghijklmnopqrstuvwxyz0123456789'; let s=''; for(let i=0;i<l;i++) s+=c[Math.floor(Math.random()*c.length)]; return s; };
+const fmtDate = dt => { try { return new Date(parseInt(dt)*1000).toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}); } catch { return ''; }};
+const randName = () => { const c='abcdefghijklmnopqrstuvwxyz'; let s=''; for(let i=0;i<10;i++) s+=c[Math.floor(Math.random()*26)]; return s; };
 
-let token='', accountId='', currentEmail='';
-let emails=[], selId=null;
-let history=JSON.parse(localStorage.getItem('dm_h')||'[]');
-let team=JSON.parse(localStorage.getItem('dm_t')||'[]');
-let settings=JSON.parse(localStorage.getItem('dm_s')||'{"autoRefresh":true,"refreshRate":15,"autoExpire":true,"expireMinutes":60}');
-let stats=JSON.parse(localStorage.getItem('dm_st')||'{"gen":0,"recv":0}');
-let timerLeft=3600, timerMax=3600, timerInt=null, autoInt=null;
-
-const save = () => {
-  localStorage.setItem('dm_h', JSON.stringify(history));
-  localStorage.setItem('dm_t', JSON.stringify(team));
-  localStorage.setItem('dm_s', JSON.stringify(settings));
-  localStorage.setItem('dm_st', JSON.stringify(stats));
-};
+let sid='', curEmail='', emails=[], selId=null;
+let history=JSON.parse(localStorage.getItem('dmh')||'[]');
+let team=JSON.parse(localStorage.getItem('dmt')||'[]');
+let cfg={ar:true,rate:15,ae:true,exp:60};
+let stats={g:0,r:0};
+let timerLeft=3600,timerMax=3600,timerInt=null,autoInt=null;
 
 let toastT;
-function toast(msg, type='i') {
-  const map = {s:['fa-check','t-s'], e:['fa-times','t-e'], i:['fa-info','t-i']};
-  $('t-ic').className = 't-ic ' + map[type][1];
-  $('t-fa').className = 'fas ' + map[type][0];
-  $('t-msg').textContent = msg;
-  $('toast').classList.add('show');
-  clearTimeout(toastT);
-  toastT = setTimeout(() => $('toast').classList.remove('show'), 3000);
+function toast(msg,type='i'){
+  const m={s:['fa-check','t-s'],e:['fa-times','t-e'],i:['fa-info','t-i']};
+  $('t-ic').className='t-ic '+m[type][1];$('t-fa').className='fas '+m[type][0];$('t-msg').textContent=msg;
+  $('toast').classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>$('toast').classList.remove('show'),3000);
 }
 
-async function getDomains() {
-  const res = await fetch(`${MT}/domains?page=1`);
-  const data = await res.json();
-  return data['hydra:member'] || [];
+async function gml(params){
+  const url=GML+'?'+new URLSearchParams({...params,_=Date.now()});
+  const res=await fetch(url);
+  return res.json();
 }
 
-async function generateEmail() {
-  $('email-display').textContent = 'Creating inbox...';
-  token = ''; accountId = ''; emails = []; selId = null;
-  try {
-    const domains = await getDomains();
-    if (!domains.length) throw new Error('No domains');
-    const domain = domains[0].domain;
-    const login = randStr(10);
-    const password = randStr(16) + 'A1!';
-    currentEmail = `${login}@${domain}`;
-
-    // Create account
-    const reg = await fetch(`${MT}/accounts`, {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({address: currentEmail, password})
-    });
-    if (!reg.ok) throw new Error('Account creation failed');
-
-    // Get token
-    const auth = await fetch(`${MT}/token`, {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({address: currentEmail, password})
-    });
-    const authData = await auth.json();
-    token = authData.token;
-    accountId = authData.id;
-
-    $('email-display').textContent = currentEmail;
-    stats.gen++; save();
-    history.unshift({email:currentEmail, created:new Date().toISOString(), recv:0, id:Date.now()});
-    if(history.length>50) history.pop();
-    save();
-    renderList(); renderReader(); renderHistory(); updateStats(); resetTimer();
-    if(settings.autoRefresh) startAuto();
-    toast('New email created!', 's');
-  } catch(e) {
-    $('email-display').textContent = 'Error — retrying...';
-    toast('Retrying...', 'e');
-    setTimeout(generateEmail, 2000);
+async function newEmail(){
+  $('email-display').textContent='Creating inbox...';
+  emails=[];selId=null;
+  try{
+    const name=randName();
+    const data=await gml({f:'set_email_user',email_user:name,lang:'en'});
+    sid=data.sid_token||'';
+    curEmail=data.email_addr||name+'@guerrillamailblock.com';
+    $('email-display').textContent=curEmail;
+    stats.g++;
+    history.unshift({email:curEmail,created:new Date().toISOString(),id:Date.now()});
+    if(history.length>50)history.pop();
+    save();renderList();renderReader();renderHist();updateStats();resetTimer();
+    if(cfg.ar)startAuto();
+    toast('New inbox ready!','s');
+  }catch(e){
+    $('email-display').textContent='Error - retrying...';
+    setTimeout(newEmail,2000);
   }
 }
 
-function copyEmail() {
-  if(!currentEmail) return;
-  navigator.clipboard.writeText(currentEmail).catch(()=>{
-    const t=document.createElement('textarea'); t.value=currentEmail;
-    document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t);
-  });
-  const f=$('copy-flash'); f.style.opacity='1'; setTimeout(()=>f.style.opacity='0',400);
-  toast('Email copied!', 's');
+function copyEmail(){
+  if(!curEmail)return;
+  navigator.clipboard.writeText(curEmail).catch(()=>{const t=document.createElement('textarea');t.value=curEmail;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t)});
+  const f=$('copy-flash');f.style.opacity='1';setTimeout(()=>f.style.opacity='0',400);
+  toast('Email copied!','s');
 }
 
-async function checkInbox(silent=false) {
-  if(!token) return;
-  const btn = $('refresh-btn');
-  if(btn) btn.querySelector('i').style.animation='spinning 1s linear infinite';
-  try {
-    const res = await fetch(`${MT}/messages`, {
-      headers: {'Authorization': `Bearer ${token}`}
-    });
-    if(!res.ok) throw new Error();
-    const data = await res.json();
-    const msgs = data['hydra:member'] || [];
-    const prev = emails.length;
-    const ids = new Set(emails.map(e=>e.id));
-    emails = msgs.map(m => ({...m, _read: ids.has(m.id) ? (emails.find(e=>e.id===m.id)?._read||false) : false}));
-    const newC = emails.filter(m=>!ids.has(m.id)).length;
-    stats.recv = emails.length; save();
-    if(newC>0 && prev>0 && !silent) toast(newC+' new email'+(newC>1?'s':'')+' arrived!','s');
-    else if(!silent && emails.length===0) toast('Inbox is empty','i');
-    else if(!silent) toast(emails.length+' email'+(emails.length>1?'s':'')+' in inbox','i');
-    renderList(); updateStats();
-  } catch(e) {
-    if(!silent) toast('Failed to load inbox. Please try again.','e');
-  }
-  if(btn) btn.querySelector('i').style.animation='';
+async function checkInbox(silent=false){
+  if(!sid)return;
+  const btn=$('refresh-btn');
+  if(btn)btn.querySelector('i').style.animation='sp 1s linear infinite';
+  try{
+    const data=await gml({f:'get_email_list',offset:0,sid_token:sid});
+    const list=data.list||[];
+    const prev=emails.length;
+    const ids=new Set(emails.map(e=>e.mail_id));
+    emails=list.map(m=>({...m,_read:ids.has(m.mail_id)?(emails.find(e=>e.mail_id===m.mail_id)?._read||false):false}));
+    const newC=emails.filter(m=>!ids.has(m.mail_id)).length;
+    stats.r=emails.length;save();
+    if(newC>0&&prev>0&&!silent)toast(newC+' new email'+(newC>1?'s':'')+' arrived!','s');
+    else if(!silent&&!emails.length)toast('Inbox is empty','i');
+    else if(!silent)toast(emails.length+' email'+(emails.length>1?'s':'')+' in inbox','i');
+    renderList();updateStats();
+  }catch(e){if(!silent)toast('Failed to load inbox','e')}
+  if(btn)btn.querySelector('i').style.animation='';
 }
 
-function renderList() {
-  const c = $('mail-list');
-  const unread = emails.filter(e=>!e._read).length;
-  const bdg = $('inbox-bdg');
-  bdg.style.display = unread>0?'inline':'none'; bdg.textContent=unread;
-  $('tab-count').textContent = emails.length;
-  $('stat-unread').textContent = unread;
-  if(!emails.length) {
-    c.innerHTML='<div class="empty"><div class="empty-ico"><i class="fas fa-inbox"></i></div><p>Your inbox is empty. Use this email address on any website to receive messages here.</p></div>';
-    return;
-  }
-  c.innerHTML = emails.map(m=>`
-    <div class="mail-item ${m._read?'':'unread'} ${selId===m.id?'active':''}" onclick="openEmail('${m.id}')">
-      <div class="m-dot"></div>
-      <div class="m-from">${esc(m.from?.address||'Unknown')}</div>
-      <div class="m-subj">${esc(m.subject||'(No subject)')}</div>
-      <div class="m-time">${fmtDate(m.createdAt)}</div>
-    </div>`).join('');
+function renderList(){
+  const c=$('mail-list');
+  const unread=emails.filter(e=>!e._read).length;
+  const b=$('bdg');b.style.display=unread>0?'inline':'none';b.textContent=unread;
+  $('tab-count').textContent=emails.length;$('su').textContent=unread;
+  if(!emails.length){c.innerHTML='<div class="empty"><div class="empty-ico"><i class="fas fa-inbox"></i></div><p>Your inbox is empty. Use this email on any website to receive messages here.</p></div>';return}
+  c.innerHTML=emails.map(m=>`<div class="mail-item ${m._read?'':'unread'} ${selId===m.mail_id?'active':''}" onclick="openEmail('${m.mail_id}')"><div class="m-dot"></div><div class="m-from">${esc(m.mail_from||'Unknown')}</div><div class="m-subj">${esc(m.mail_subject||'(No subject)')}</div><div class="m-time">${fmtDate(m.mail_timestamp)}</div></div>`).join('');
 }
 
-async function openEmail(id) {
-  selId = id;
-  const meta = emails.find(e=>e.id===id); if(!meta) return;
-  meta._read = true; renderList();
+async function openEmail(id){
+  selId=id;const meta=emails.find(e=>e.mail_id===id);if(!meta)return;
+  meta._read=true;renderList();
   $('reader-empty').style.display='none';
-  const rc = $('reader-content'); rc.style.display='flex';
-  rc.innerHTML=`<div class="reader-hdr"><div class="reader-subj">${esc(meta.subject||'(No subject)')}</div><div class="meta-row"><span class="mk">From</span><span class="mv">${esc(meta.from?.address||'')}</span></div><div class="meta-row"><span class="mk">Date</span><span class="mv">${fmtDate(meta.createdAt)}</span></div><div class="meta-row"><span class="mk">To</span><span class="mv" style="color:var(--accent)">${esc(currentEmail)}</span></div><div class="reader-acts"><button class="btn btn-d btn-sm" onclick="delEmail('${id}')"><i class="fas fa-trash"></i> Delete</button></div></div><div class="reader-body" id="rbody"><div style="display:flex;align-items:center;gap:8px;color:var(--muted)"><div class="spin"></div> Loading...</div></div>`;
-  try {
-    const res = await fetch(`${MT}/messages/${id}`, {headers:{'Authorization':`Bearer ${token}`}});
-    const d = await res.json();
-    const rb = $('rbody');
-    if(d.html && d.html[0]) rb.innerHTML=`<div style="background:rgba(255,255,255,0.02);border-radius:10px;padding:16px">${sanitize(d.html[0])}</div>`;
-    else if(d.text) rb.innerHTML=`<pre style="white-space:pre-wrap;font-family:'Inter',sans-serif;font-size:13px">${esc(d.text)}</pre>`;
-    else rb.innerHTML='<span style="color:var(--muted)">No content found.</span>';
-  } catch { $('rbody').innerHTML='<span style="color:var(--accent2)">Failed to load email.</span>'; }
+  const rc=$('reader-content');rc.style.display='flex';
+  rc.innerHTML=`<div class="reader-hdr"><div class="reader-subj">${esc(meta.mail_subject||'(No subject)')}</div><div class="meta-row"><span class="mk">From</span><span class="mv">${esc(meta.mail_from||'')}</span></div><div class="meta-row"><span class="mk">Date</span><span class="mv">${fmtDate(meta.mail_timestamp)}</span></div><div class="meta-row"><span class="mk">To</span><span class="mv" style="color:var(--accent)">${esc(curEmail)}</span></div><div class="reader-acts"><button class="btn btn-d btn-sm" onclick="delEmail('${id}')"><i class="fas fa-trash"></i> Delete</button></div></div><div class="reader-body" id="rbody"><div style="display:flex;align-items:center;gap:8px;color:var(--muted)"><div class="spin"></div> Loading...</div></div>`;
+  try{
+    const data=await gml({f:'fetch_email',email_id:id,sid_token:sid});
+    const rb=$('rbody');
+    const body=data.mail_body||data.mail_text_only||'';
+    if(body.includes('<'))rb.innerHTML=`<div style="background:rgba(255,255,255,0.02);border-radius:10px;padding:16px">${sanitize(body)}</div>`;
+    else rb.innerHTML=`<pre style="white-space:pre-wrap;font-family:'Inter',sans-serif;font-size:13px">${esc(body)}</pre>`;
+  }catch{$('rbody').innerHTML='<span style="color:var(--accent2)">Failed to load email.</span>'}
 }
 
-function sanitize(h){return h.replace(/<script[\s\S]*?<\/script>/gi,'').replace(/on\w+="[^"]*"/gi,'').replace(/javascript:/gi,'')}
+const sanitize=h=>h.replace(/<script[\s\S]*?<\/script>/gi,'').replace(/on\w+="[^"]*"/gi,'').replace(/javascript:/gi,'');
 function renderReader(){$('reader-empty').style.display='flex';$('reader-content').style.display='none';$('reader-content').innerHTML=''}
-function delEmail(id){emails=emails.filter(e=>e.id!==id);selId=null;renderList();renderReader();toast('Email deleted','i')}
+function delEmail(id){emails=emails.filter(e=>e.mail_id!==id);selId=null;renderList();renderReader();toast('Email deleted','i')}
 function clearInbox(){emails=[];selId=null;renderList();renderReader();updateStats();toast('Inbox cleared','i')}
-function updateStats(){$('stat-gen').textContent=stats.gen;$('stat-recv').textContent=stats.recv}
-
-function resetTimer(){timerMax=settings.expireMinutes*60;timerLeft=timerMax;clearInterval(timerInt);if(settings.autoExpire)startTimer();updateTimer()}
-function startTimer(){timerInt=setInterval(()=>{timerLeft--;updateTimer();if(timerLeft<=0){clearInterval(timerInt);toast('Email expired! Generating new one...','i');generateEmail()}},1000)}
+const save=()=>{localStorage.setItem('dmh',JSON.stringify(history));localStorage.setItem('dmt',JSON.stringify(team))};
+function updateStats(){$('sg').textContent=stats.g;$('sr').textContent=stats.r}
+function resetTimer(){timerMax=cfg.exp*60;timerLeft=timerMax;clearInterval(timerInt);if(cfg.ae)startTimer();updateTimer()}
+function startTimer(){timerInt=setInterval(()=>{timerLeft--;updateTimer();if(timerLeft<=0){clearInterval(timerInt);toast('Email expired! Generating new...','i');newEmail()}},1000)}
 function updateTimer(){const m=String(Math.floor(timerLeft/60)).padStart(2,'0'),s=String(timerLeft%60).padStart(2,'0');$('timer-num').textContent=`${m}:${s}`;const p=(timerLeft/timerMax)*100,f=$('timer-fill');f.style.width=p+'%';f.style.background=p>60?'#00ff88':p>25?'#ffaa00':'#ff2d55'}
-function startAuto(){clearInterval(autoInt);autoInt=setInterval(()=>checkInbox(true),settings.refreshRate*1000)}
+function startAuto(){clearInterval(autoInt);autoInt=setInterval(()=>checkInbox(true),cfg.rate*1000)}
 
-function renderHistory(){
+function renderHist(){
   const c=$('hist-list');
   if(!history.length){c.innerHTML='<div class="empty"><div class="empty-ico"><i class="fas fa-history"></i></div><p>No history yet.</p></div>';return}
-  c.innerHTML=history.map(h=>`<div class="hist-item"><div><div class="hist-email">${esc(h.email)}</div><div class="hist-meta">${fmtDate(h.created)}</div></div><div style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="navigator.clipboard.writeText('${esc(h.email)}');toast('Copied!','s')"><i class="fas fa-copy"></i></button></div></div>`).join('');
+  c.innerHTML=history.map(h=>`<div class="hist-item"><div><div class="hist-email">${esc(h.email)}</div><div class="hist-meta">${new Date(h.created).toLocaleDateString()}</div></div><button class="btn btn-g btn-sm" onclick="navigator.clipboard.writeText('${esc(h.email)}');toast('Copied!','s')"><i class="fas fa-copy"></i></button></div>`).join('');
 }
-function clearHistory(){history=[];save();renderHistory();toast('History cleared','i')}
+function clearHist(){history=[];save();renderHist();toast('History cleared','i')}
 
-function addTeamEmail(){
+function addTeam(){
   const e={id:Date.now(),name:'Inbox '+(team.length+1),email:'Generating...',created:new Date().toISOString()};
   team.push(e);save();renderTeam();
-  generateTeamEmail(e.id);
-  toast('Adding new team email...','i');
-}
-async function generateTeamEmail(id){
-  try{
-    const domains=await getDomains();
-    const domain=domains[0].domain;
-    const login=randStr(10);
-    const password=randStr(16)+'A1!';
-    const email=`${login}@${domain}`;
-    const reg=await fetch(`${MT}/accounts`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address:email,password})});
-    if(!reg.ok)throw new Error();
-    const t=team.find(x=>x.id===id);
-    if(t){t.email=email;t.login=login;t.password=password;t.domain=domain;save();renderTeam();toast('Team email ready: '+email,'s')}
-  }catch{const t=team.find(x=>x.id===id);if(t){t.email='Failed';save();renderTeam()}}
+  (async()=>{
+    try{
+      const name=randName();
+      const data=await gml({f:'set_email_user',email_user:name,lang:'en'});
+      const t=team.find(x=>x.id===e.id);
+      if(t){t.email=data.email_addr||name+'@guerrillamailblock.com';t.sid=data.sid_token;save();renderTeam();toast('Team email ready: '+t.email,'s')}
+    }catch{const t=team.find(x=>x.id===e.id);if(t){t.email='Failed';save();renderTeam()}}
+  })();
 }
 function removeTeam(id){team=team.filter(t=>t.id!==id);save();renderTeam()}
 function renderTeam(){
   const g=$('team-grid');
-  if(!team.length){g.innerHTML='<div class="empty" style="grid-column:1/-1"><div class="empty-ico"><i class="fas fa-users"></i></div><p>No team emails yet.<br>Add emails for your team members.</p></div>';return}
-  g.innerHTML=team.map(t=>`<div class="team-card ${t.email===currentEmail?'ac':''}"><div class="team-hdr"><div class="team-name">${esc(t.name)}</div><button class="icon-btn" onclick="removeTeam(${t.id})"><i class="fas fa-times"></i></button></div><div class="team-email">${esc(t.email)}</div><div class="btn-row" style="margin-top:12px"><button class="btn btn-g btn-sm" onclick="navigator.clipboard.writeText('${esc(t.email)}');toast('Copied!','s')"><i class="fas fa-copy"></i> Copy</button></div></div>`).join('');
+  if(!team.length){g.innerHTML='<div class="empty" style="grid-column:1/-1"><div class="empty-ico"><i class="fas fa-users"></i></div><p>No team emails yet.</p></div>';return}
+  g.innerHTML=team.map(t=>`<div class="team-card ${t.email===curEmail?'ac':''}"><div class="team-hdr"><div class="team-name">${esc(t.name)}</div><button class="icon-btn" onclick="removeTeam(${t.id})"><i class="fas fa-times"></i></button></div><div class="team-email">${esc(t.email)}</div><div class="btn-row" style="margin-top:12px"><button class="btn btn-g btn-sm" onclick="navigator.clipboard.writeText('${esc(t.email)}');toast('Copied!','s')"><i class="fas fa-copy"></i> Copy</button></div></div>`).join('');
 }
 
-function toggleSetting(k){settings[k]=!settings[k];save();applySettings();if(k==='autoRefresh'){if(settings[k])startAuto();else clearInterval(autoInt)}}
-function setRefreshRate(v){settings.refreshRate=parseInt(v);save();if(settings.autoRefresh)startAuto()}
-function setExpireMinutes(v){settings.expireMinutes=parseInt(v);resetTimer();save()}
-function applySettings(){['autoRefresh','autoExpire'].forEach(k=>{const el=$('toggle-'+k);if(el)el.className='toggle'+(settings[k]?' on':'')})}
+function togSet(k){cfg[k]=!cfg[k];const el=$('tog-'+k);if(el)el.className='toggle'+(cfg[k]?' on':'');if(k==='ar'){if(cfg[k])startAuto();else clearInterval(autoInt)}}
+function setRate(v){cfg.rate=parseInt(v);if(cfg.ar)startAuto()}
+function setExp(v){cfg.exp=parseInt(v);resetTimer()}
 
 function switchPage(p){
   document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-  $('page-'+p).classList.add('active');
-  $('tab-'+p).classList.add('active');
+  $('page-'+p).classList.add('active');$('tab-'+p).classList.add('active');
 }
 
-function init(){applySettings();generateEmail();}
-window.addEventListener('DOMContentLoaded',init);
+window.addEventListener('DOMContentLoaded',newEmail);
 </script>
 </body>
 </html>
