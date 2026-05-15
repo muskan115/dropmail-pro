@@ -258,7 +258,7 @@ function toast(msg,type='i'){
 }
 
 async function gml(params){
-  const url=GML+'?'+new URLSearchParams({...params,_=Date.now()});
+  const url=GML+'?'+new URLSearchParams({...params,_:Date.now()});
   const res=await fetch(url);
   return res.json();
 }
