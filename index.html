@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DropMail Pro — Temporary Email Service</title>
+<meta name="description" content="Free unlimited temporary emails. No signup, no phone number required. Instant inbox.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<div class="app">
+  <div class="wrapper">
+
+    <!-- Header -->
+    <header class="header fu">
+      <div class="header-inner">
+        <div class="logo">
+          <div class="logo-mark"><i class="fas fa-envelope"></i></div>
+          Drop<em>Mail</em>
+        </div>
+
+        <nav class="tabs">
+          <button class="tab active" id="tab-inbox" onclick="switchPage('inbox')">
+            <i class="fas fa-inbox"></i> Inbox
+            <span class="tab-count" id="tab-inbox-count">0</span>
+            <span class="tab-dot"></span>
+          </button>
+          <button class="tab" id="tab-team" onclick="switchPage('team')">
+            <i class="fas fa-users"></i> Team
+          </button>
+          <button class="tab" id="tab-history" onclick="switchPage('history')">
+            <i class="fas fa-history"></i> History
+          </button>
+          <button class="tab" id="tab-settings" onclick="switchPage('settings')">
+            <i class="fas fa-cog"></i> Settings
+          </button>
+        </nav>
+
+        <div class="header-right">
+          <div class="live-badge">
+            <span class="live-dot"></span> Live
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- PAGE: INBOX -->
+    <div class="page active" id="page-inbox">
+
+      <div class="hero fu fu1">
+        <div class="hero-chip">Unlimited &nbsp;&middot;&nbsp; Real &nbsp;&middot;&nbsp; Anonymous</div>
+        <h1>Temporary Email<br><span class="grad">Instant Inbox</span></h1>
+        <p>Perfect for your office — no phone number, no signup required.<br>Receive real emails and manage them as a team.</p>
+      </div>
+
+      <!-- Generator Card -->
+      <div class="gen-card fu fu2">
+        <div class="gen-top">
+          <div class="gen-label">Your Active Email Address</div>
+          <button class="btn btn-ghost btn-sm" onclick="generateEmail()">
+            <i class="fas fa-random"></i> Generate New
+          </button>
+        </div>
+
+        <div class="email-row">
+          <div class="email-box" onclick="copyEmail()" title="Click to copy">
+            <i class="fas fa-envelope email-box-icon"></i>
+            <div class="email-addr">
+              <span id="email-login">generating...</span><span id="email-domain"></span>
+            </div>
+            <span class="copy-hint"><i class="fas fa-copy"></i> click to copy</span>
+            <div class="copy-flash" id="copy-flash"></div>
+          </div>
+        </div>
+
+        <div class="domain-pills">
+          <button class="dpill active" onclick="selectDomain('1secmail.com', this)">@1secmail.com</button>
+          <button class="dpill" onclick="selectDomain('1secmail.org', this)">@1secmail.org</button>
+          <button class="dpill" onclick="selectDomain('1secmail.net', this)">@1secmail.net</button>
+          <button class="dpill" onclick="selectDomain('esiix.com', this)">@esiix.com</button>
+          <button class="dpill" onclick="selectDomain('wwjmp.com', this)">@wwjmp.com</button>
+          <button class="dpill" onclick="selectDomain('hjvsq.com', this)">@hjvsq.com</button>
+          <button class="dpill" onclick="selectDomain('kzccv.com', this)">@kzccv.com</button>
+          <button class="dpill" onclick="selectDomain('qiott.com', this)">@qiott.com</button>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn btn-accent" onclick="copyEmail()">
+            <i class="fas fa-copy"></i> Copy Email
+          </button>
+          <button class="btn btn-ghost" id="refresh-btn" onclick="checkInbox()">
+            <i class="fas fa-sync-alt"></i> Check Inbox
+          </button>
+          <button class="btn btn-ghost" onclick="addTeamEmail(); switchPage('team')">
+            <i class="fas fa-plus"></i> Add to Team
+          </button>
+          <button class="btn btn-danger" onclick="clearInbox()">
+            <i class="fas fa-trash"></i> Clear
+          </button>
+        </div>
+
+        <div class="timer-row">
+          <i class="fas fa-clock" style="color:var(--muted);font-size:12px"></i>
+          <span class="timer-label">Expires in:</span>
+          <div class="timer-bar"><div class="timer-fill" id="timer-fill"></div></div>
+          <span class="timer-num" id="timer-num">60:00</span>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid fu fu3">
+        <div class="stat-card">
+          <div class="stat-val c-purple" id="stat-generated">0</div>
+          <div class="stat-lbl">Emails Generated</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val c-green" id="stat-received-card">0</div>
+          <div class="stat-lbl">Emails Received</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val c-pink" id="stat-unread-card">0</div>
+          <div class="stat-lbl">Unread</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val c-yellow">INF</div>
+          <div class="stat-lbl">No Limits</div>
+        </div>
+      </div>
+
+      <!-- Inbox + Reader -->
+      <div class="main-grid fu fu4">
+
+        <div class="panel" style="min-height:500px">
+          <div class="panel-head">
+            <div class="panel-title">
+              <i class="fas fa-inbox"></i> Inbox
+              <span class="badge" id="inbox-badge" style="display:none">0</span>
+            </div>
+            <button class="icon-btn" id="refresh-btn" onclick="checkInbox()" title="Refresh inbox">
+              <i class="fas fa-sync-alt"></i>
+            </button>
+          </div>
+          <div class="mail-scroll" id="mail-list">
+            <div class="empty-inbox">
+              <div class="empty-icon-wrap"><i class="fas fa-inbox"></i></div>
+              <p>Your inbox is empty.<br>Use this email address on any website to receive messages here.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel" style="min-height:500px">
+          <div class="reader-empty" id="reader-empty">
+            <div class="big-icon"><i class="fas fa-envelope-open"></i></div>
+            <p>Select an email from<br>your inbox to read it here.</p>
+          </div>
+          <div id="reader-content" style="display:none;flex-direction:column;flex:1;overflow:hidden;"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PAGE: TEAM -->
+    <div class="page" id="page-team">
+      <div style="padding:28px 0 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div class="hero-chip" style="display:inline-flex;margin-bottom:10px">Team Mode</div>
+          <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800">Manage Multiple Email Addresses</h2>
+          <p style="color:var(--muted);font-size:13px;margin-top:6px">Create and manage separate temporary emails for your entire team — all in one place.</p>
+        </div>
+        <button class="btn btn-accent" onclick="addTeamEmail()">
+          <i class="fas fa-plus"></i> Add New Email
+        </button>
+      </div>
+      <div class="team-grid" id="team-grid"></div>
+    </div>
+
+    <!-- PAGE: HISTORY -->
+    <div class="page" id="page-history">
+      <div style="padding:28px 0 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div class="hero-chip" style="display:inline-flex;margin-bottom:10px">History</div>
+          <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800">Email History</h2>
+          <p style="color:var(--muted);font-size:13px;margin-top:6px">View and reuse previously generated email addresses.</p>
+        </div>
+        <button class="btn btn-danger" onclick="clearHistory()">
+          <i class="fas fa-trash"></i> Clear History
+        </button>
+      </div>
+      <div class="history-list" id="history-list"></div>
+    </div>
+
+    <!-- PAGE: SETTINGS -->
+    <div class="page" id="page-settings">
+      <div style="padding:28px 0 16px;">
+        <div class="hero-chip" style="display:inline-flex;margin-bottom:10px">Settings</div>
+        <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800">App Settings</h2>
+        <p style="color:var(--muted);font-size:13px;margin-top:6px">Customize the app to fit your workflow.</p>
+      </div>
+
+      <div class="settings-page">
+        <div class="settings-section">
+          <div class="settings-title"><i class="fas fa-sync-alt"></i> Auto Refresh</div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Enable Auto Refresh</div>
+              <div class="setting-desc">Automatically check inbox for new emails</div>
+            </div>
+            <button class="toggle on" id="toggle-autoRefresh" onclick="toggleSetting('autoRefresh')"></button>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Refresh Interval</div>
+              <div class="setting-desc">How often to check for new emails</div>
+            </div>
+            <select class="select-input" onchange="setRefreshRate(this.value)">
+              <option value="10">Every 10 seconds</option>
+              <option value="15" selected>Every 15 seconds</option>
+              <option value="30">Every 30 seconds</option>
+              <option value="60">Every minute</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <div class="settings-title"><i class="fas fa-hourglass-half"></i> Email Expiry</div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Auto Expire</div>
+              <div class="setting-desc">Automatically generate a new email after expiry</div>
+            </div>
+            <button class="toggle on" id="toggle-autoExpire" onclick="toggleSetting('autoExpire')"></button>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Expiry Duration</div>
+              <div class="setting-desc">How long before the email expires</div>
+            </div>
+            <select class="select-input" onchange="setExpireMinutes(this.value)">
+              <option value="30">30 minutes</option>
+              <option value="60" selected>1 hour</option>
+              <option value="120">2 hours</option>
+              <option value="1440">24 hours</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <div class="settings-title"><i class="fas fa-bell"></i> Notifications</div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Browser Notifications</div>
+              <div class="setting-desc">Get notified when a new email arrives</div>
+            </div>
+            <button class="toggle" id="toggle-notifications" onclick="toggleSetting('notifications')"></button>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <div class="settings-title"><i class="fas fa-info-circle"></i> About</div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">DropMail Pro</div>
+              <div class="setting-desc">Powered by 1secMail API — Free, unlimited, no signup required</div>
+            </div>
+            <span style="color:var(--accent);font-size:12px;font-weight:600">v2.0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      DropMail Pro &nbsp;&middot;&nbsp; Powered by <span>1secMail API</span> &nbsp;&middot;&nbsp; Free &middot; Unlimited &middot; No Signup
+    </footer>
+
+  </div>
+</div>
+
+<span id="stat-received" style="display:none">0</span>
+<span id="stat-unread" style="display:none">0</span>
+
+<div class="toast" id="toast">
+  <div class="toast-ic i" id="toast-ic"><i class="fas fa-info"></i></div>
+  <span id="toast-msg"></span>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
