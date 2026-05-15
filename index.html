@@ -410,7 +410,9 @@ footer span{color:var(--accent)}
 </div>
 
 <script>
-const API="https://cors-anywhere.herokuapp.com/https://www.1secmail.com/api/v1/";
+const PROXY="https://api.allorigins.win/raw?url=";
+const API_BASE="https://www.1secmail.com/api/v1/";
+const apiCall=params=>fetch(PROXY+encodeURIComponent(API_BASE+"?"+params),{cache:"no-store"});
 const DOMAINS=['1secmail.com','1secmail.org','1secmail.net','esiix.com','wwjmp.com','hjvsq.com','kzccv.com','qiott.com'];
 const $=id=>document.getElementById(id);
 const rand=n=>Math.floor(Math.random()*n);
@@ -469,7 +471,7 @@ async function checkInbox(silent=false){
   const btn=$('refresh-btn');const btn2=$('refresh-btn2');
   [btn,btn2].forEach(b=>{if(b)b.querySelector('i').style.animation='spinning 1s linear infinite'});
   try{
-    const res=await fetch(`${API}?action=getMessages&login=${login}&domain=${domain}`,{cache:'no-store'});
+    const res=await apiCall(`action=getMessages&login=${login}&domain=${domain}`);
     if(!res.ok)throw new Error();
     const data=await res.json();
     const prev=emails.length;
@@ -504,7 +506,7 @@ async function openEmail(id){
   const rc=$('reader-content');rc.style.display='flex';
   rc.innerHTML=`<div class="reader-hdr"><div class="reader-subj">${esc(meta.subject||'(No subject)')}</div><div class="meta-row"><span class="mk">From</span><span class="mv">${esc(meta.from||'')}</span></div><div class="meta-row"><span class="mk">Date</span><span class="mv">${fmtDate(meta.date)}</span></div><div class="meta-row"><span class="mk">To</span><span class="mv" style="color:var(--accent)">${esc(fullEmail())}</span></div><div class="reader-acts"><button class="btn btn-d btn-sm" onclick="delEmail(${id})"><i class="fas fa-trash"></i> Delete</button></div></div><div class="reader-body" id="rbody"><div style="display:flex;align-items:center;gap:8px;color:var(--muted)"><div class="spin"></div> Loading...</div></div>`;
   try{
-    const res=await fetch(`${API}?action=readMessage&login=${login}&domain=${domain}&id=${id}`);
+    const res=await apiCall(`action=readMessage&login=${login}&domain=${domain}&id=${id}`);
     const d=await res.json();const rb=$('rbody');
     if(d.htmlBody)rb.innerHTML=`<div style="background:rgba(255,255,255,0.02);border-radius:10px;padding:16px">${sanitize(d.htmlBody)}</div>`;
     else if(d.textBody)rb.innerHTML=`<pre style="white-space:pre-wrap;font-family:'Inter',sans-serif;font-size:13px">${esc(d.textBody)}</pre>`;
