@@ -1,294 +1,565 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DropMail Pro — Temporary Email Service</title>
-<meta name="description" content="Free unlimited temporary emails. No signup, no phone number required. Instant inbox.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="stylesheet" href="style.css">
+<style>
+:root {
+  --bg: #000;
+  --surface: #0a0a0a;
+  --surface2: #111;
+  --surface3: #1a1a1a;
+  --border: rgba(0,200,255,0.1);
+  --border2: rgba(0,200,255,0.2);
+  --accent: #00c8ff;
+  --accent2: #ff2d55;
+  --accent3: #00ff88;
+  --text: #f0f0f0;
+  --muted: #555;
+  --muted2: #333;
+  --r: 12px;
+  --r-lg: 18px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:#1a1a1a;border-radius:2px}
+
+.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(0,200,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,255,0.03) 1px,transparent 1px);
+  background-size:40px 40px}
+
+.app{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px;width:100%}
+
+/* HEADER */
+.hdr{padding:14px 0;border-bottom:1px solid var(--border2);position:sticky;top:0;z-index:100;background:rgba(0,0,0,0.95);backdrop-filter:blur(20px)}
+.hdr-in{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;color:var(--text);text-decoration:none}
+.logo-mark{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(0,200,255,0.4)}
+.logo-mark i{color:#000;font-size:14px}
+.logo em{color:var(--accent);font-style:normal}
+.live-badge{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:20px;background:rgba(0,255,136,0.08);color:var(--accent3);border:1px solid rgba(0,255,136,0.2)}
+.live-dot{width:6px;height:6px;background:var(--accent3);border-radius:50%;animation:blink 1.4s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* TABS */
+.tabs{display:flex;gap:2px;padding:3px;background:var(--surface);border:1px solid var(--border2);border-radius:10px}
+.tab{padding:7px 16px;border-radius:7px;font-size:12px;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--muted);font-family:'Inter',sans-serif;transition:all .2s;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.tab.active{background:var(--accent);color:#000;font-weight:700}
+.tab:hover:not(.active){color:var(--text)}
+.tab-count{font-size:10px;padding:1px 6px;border-radius:8px;background:rgba(0,0,0,0.2);min-width:18px;text-align:center}
+
+.page{display:none;flex:1;flex-direction:column}
+.page.active{display:flex}
+
+/* HERO */
+.hero{padding:44px 0 28px;text-align:center}
+.chip{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding:6px 18px;border-radius:20px;border:1px solid rgba(0,200,255,0.25);background:rgba(0,200,255,0.05);margin-bottom:22px}
+.hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(28px,5vw,52px);font-weight:800;line-height:1.1;letter-spacing:-1.5px;margin-bottom:14px}
+.grad{background:linear-gradient(135deg,#00c8ff 0%,#fff 55%,#00ff88 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--muted);font-size:14px;max-width:460px;margin:0 auto;line-height:1.8}
+
+/* GEN CARD */
+.card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r-lg);padding:24px;margin-bottom:18px;position:relative;overflow:hidden;box-shadow:0 0 30px rgba(0,200,255,0.08)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+.card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px}
+.card-label{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+.email-box{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);padding:14px 18px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;margin-bottom:14px}
+.email-box:hover{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,200,255,0.08)}
+.email-box i{color:var(--accent);font-size:15px;flex-shrink:0}
+.email-addr{font-size:15px;font-weight:600;color:var(--accent);flex:1;word-break:break-all}
+.copy-hint{font-size:10px;color:var(--muted);flex-shrink:0}
+.copy-flash{position:absolute;inset:0;background:rgba(0,200,255,0.08);opacity:0;transition:opacity .3s;pointer-events:none}
+
+.dpills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.dp{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:500;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
+.dp:hover{color:var(--text);border-color:rgba(0,200,255,0.3)}
+.dp.active{border-color:var(--accent);color:var(--accent);background:rgba(0,200,255,0.08)}
+
+.btn-row{display:flex;gap:8px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:9px;font-size:12px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:all .2s;border:none;outline:none;white-space:nowrap}
+.btn-p{background:var(--accent);color:#000;box-shadow:0 0 20px rgba(0,200,255,0.25)}
+.btn-p:hover{transform:translateY(-1px);box-shadow:0 0 30px rgba(0,200,255,0.4)}
+.btn-g{background:var(--surface2);color:var(--text);border:1px solid var(--border2)}
+.btn-g:hover{border-color:var(--accent);color:var(--accent)}
+.btn-d{background:rgba(255,45,85,0.08);color:var(--accent2);border:1px solid rgba(255,45,85,0.2)}
+.btn-d:hover{background:rgba(255,45,85,0.15)}
+.btn-sm{padding:7px 12px;font-size:11px}
+.btn i{font-size:13px}
+
+.timer-row{display:flex;align-items:center;gap:12px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+.timer-lbl{font-size:11px;font-weight:500;color:var(--muted);white-space:nowrap}
+.timer-bar{flex:1;height:2px;background:var(--surface3);border-radius:2px;overflow:hidden}
+.timer-fill{height:100%;border-radius:2px;transition:width 1s linear,background .5s}
+.timer-num{font-size:12px;font-weight:700;min-width:46px;text-align:right;color:var(--accent);font-family:'Plus Jakarta Sans',sans-serif}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px}
+.stat-v{font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;font-weight:800}
+.c-b{color:var(--accent);text-shadow:0 0 20px rgba(0,200,255,0.3)}
+.c-g{color:var(--accent3)}
+.c-r{color:var(--accent2)}
+.c-y{color:#ffaa00}
+.stat-l{font-size:11px;color:var(--muted);margin-top:6px;font-weight:500}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:320px 1fr;gap:16px;flex:1;margin-bottom:24px}
+
+/* PANEL */
+.panel{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r-lg);overflow:hidden;display:flex;flex-direction:column;min-height:500px}
+.panel-h{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.panel-t{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
+.panel-t i{color:var(--accent)}
+.bdg{font-size:10px;padding:2px 8px;border-radius:10px;background:var(--accent);color:#000;font-weight:700}
+.icon-btn{width:30px;height:30px;border-radius:8px;background:var(--surface2);border:1px solid var(--border2);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .2s}
+.icon-btn:hover{color:var(--accent);border-color:var(--accent)}
+
+.mail-scroll{flex:1;overflow-y:auto}
+.mail-item{padding:13px 18px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .15s;position:relative}
+.mail-item:hover{background:var(--surface2)}
+.mail-item.active{background:rgba(0,200,255,0.05);border-left:2px solid var(--accent);padding-left:16px}
+.mail-item.unread .m-from{color:var(--text);font-weight:600}
+.m-dot{position:absolute;top:16px;right:16px;width:7px;height:7px;background:var(--accent);border-radius:50%;display:none;box-shadow:0 0 8px var(--accent)}
+.mail-item.unread .m-dot{display:block}
+.m-from{font-size:12px;color:var(--muted);margin-bottom:3px;padding-right:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m-subj{font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:18px}
+.m-time{font-size:10px;color:var(--muted);margin-top:4px}
+
+.empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;color:var(--muted)}
+.empty-ico{width:52px;height:52px;background:var(--surface2);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 auto 14px;border:1px solid var(--border2);color:var(--muted)}
+.empty p{font-size:12px;line-height:1.7;max-width:200px}
+
+/* READER */
+.reader-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--muted);padding:40px}
+.reader-empty .big-i{font-size:40px;margin-bottom:16px;opacity:.15}
+.reader-empty p{font-size:13px;line-height:1.7}
+.reader-hdr{padding:20px 24px;border-bottom:1px solid var(--border);flex-shrink:0}
+.reader-subj{font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:700;line-height:1.3;margin-bottom:12px}
+.meta-row{display:flex;gap:10px;font-size:12px;margin-bottom:4px}
+.mk{color:var(--muted);min-width:36px;font-weight:500}
+.mv{color:var(--muted)}
+.reader-acts{display:flex;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.reader-body{flex:1;overflow-y:auto;padding:24px;font-size:13px;line-height:1.9;color:#aaa}
+
+/* HISTORY */
+.hist-list{padding:16px;display:flex;flex-direction:column;gap:8px}
+.hist-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.hist-item:hover{border-color:var(--border2)}
+.hist-email{font-size:13px;font-weight:600;color:var(--accent)}
+.hist-meta{font-size:11px;color:var(--muted);margin-top:3px}
+
+/* TEAM */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;padding:20px}
+.team-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;transition:border-color .2s}
+.team-card:hover{border-color:var(--border2)}
+.team-card.ac{border-color:var(--accent);box-shadow:0 0 16px rgba(0,200,255,0.1)}
+.team-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.team-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700}
+.team-email{font-size:12px;font-weight:600;color:var(--accent);margin-bottom:8px;word-break:break-all}
+
+/* SETTINGS */
+.set-wrap{padding:24px;max-width:600px}
+.set-sec{margin-bottom:28px}
+.set-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;margin-bottom:12px;color:var(--text);display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.06em}
+.set-title i{color:var(--accent)}
+.set-row{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:9px;margin-bottom:8px;gap:16px}
+.set-lbl{font-size:13px;font-weight:500}
+.set-desc{font-size:11px;color:var(--muted);margin-top:2px}
+.toggle{width:38px;height:20px;background:var(--surface3);border-radius:10px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;border:none}
+.toggle.on{background:var(--accent)}
+.toggle::after{content:'';position:absolute;width:14px;height:14px;background:#fff;border-radius:50%;top:3px;left:3px;transition:left .2s}
+.toggle.on::after{left:21px}
+.sel-in{background:var(--surface2);border:1px solid var(--border2);color:var(--text);border-radius:9px;padding:7px 12px;font-family:'Inter',sans-serif;font-size:12px;cursor:pointer}
+
+/* SPINNER */
+.spin{display:inline-block;width:15px;height:15px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spinning .7s linear infinite}
+@keyframes spinning{to{transform:rotate(360deg)}}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);padding:12px 20px;display:flex;align-items:center;gap:10px;font-size:12px;font-weight:500;z-index:9999;transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .4s;opacity:0;pointer-events:none;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.t-ic{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+.t-s{background:rgba(0,255,136,.12);color:var(--accent3)}
+.t-e{background:rgba(255,45,85,.12);color:var(--accent2)}
+.t-i{background:rgba(0,200,255,.12);color:var(--accent)}
+
+/* PAGE HEADERS */
+.pg-hdr{padding:28px 0 16px;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.pg-hdr h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800}
+.pg-hdr p{color:var(--muted);font-size:13px;margin-top:6px}
+
+footer{border-top:1px solid var(--border);padding:16px 0;text-align:center;color:var(--muted2);font-size:11px}
+footer span{color:var(--accent)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.fu{animation:fadeUp .4s ease forwards}
+.fu1{animation-delay:.05s;opacity:0}
+.fu2{animation-delay:.1s;opacity:0}
+.fu3{animation-delay:.18s;opacity:0}
+.fu4{animation-delay:.25s;opacity:0}
+
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .wrap{padding:0 14px}
+  .hero h1{font-size:28px}
+  .tabs{gap:1px}
+  .tab{padding:6px 10px;font-size:11px}
+}
+</style>
 </head>
 <body>
-
 <div class="bg-grid"></div>
-
 <div class="app">
-  <div class="wrapper">
+<div class="wrap">
 
-    <!-- Header -->
-    <header class="header fu">
-      <div class="header-inner">
-        <div class="logo">
-          <div class="logo-mark"><i class="fas fa-envelope"></i></div>
-          Drop<em>Mail</em>
-        </div>
-
-        <nav class="tabs">
-          <button class="tab active" id="tab-inbox" onclick="switchPage('inbox')">
-            <i class="fas fa-inbox"></i> Inbox
-            <span class="tab-count" id="tab-inbox-count">0</span>
-            <span class="tab-dot"></span>
-          </button>
-          <button class="tab" id="tab-team" onclick="switchPage('team')">
-            <i class="fas fa-users"></i> Team
-          </button>
-          <button class="tab" id="tab-history" onclick="switchPage('history')">
-            <i class="fas fa-history"></i> History
-          </button>
-          <button class="tab" id="tab-settings" onclick="switchPage('settings')">
-            <i class="fas fa-cog"></i> Settings
-          </button>
-        </nav>
-
-        <div class="header-right">
-          <div class="live-badge">
-            <span class="live-dot"></span> Live
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- PAGE: INBOX -->
-    <div class="page active" id="page-inbox">
-
-      <div class="hero fu fu1">
-        <div class="hero-chip">Unlimited &nbsp;&middot;&nbsp; Real &nbsp;&middot;&nbsp; Anonymous</div>
-        <h1>Temporary Email<br><span class="grad">Instant Inbox</span></h1>
-        <p>Perfect for your office — no phone number, no signup required.<br>Receive real emails and manage them as a team.</p>
-      </div>
-
-      <!-- Generator Card -->
-      <div class="gen-card fu fu2">
-        <div class="gen-top">
-          <div class="gen-label">Your Active Email Address</div>
-          <button class="btn btn-ghost btn-sm" onclick="generateEmail()">
-            <i class="fas fa-random"></i> Generate New
-          </button>
-        </div>
-
-        <div class="email-row">
-          <div class="email-box" onclick="copyEmail()" title="Click to copy">
-            <i class="fas fa-envelope email-box-icon"></i>
-            <div class="email-addr">
-              <span id="email-login">generating...</span><span id="email-domain"></span>
-            </div>
-            <span class="copy-hint"><i class="fas fa-copy"></i> click to copy</span>
-            <div class="copy-flash" id="copy-flash"></div>
-          </div>
-        </div>
-
-        <div class="domain-pills">
-          <button class="dpill active" onclick="selectDomain('1secmail.com', this)">@1secmail.com</button>
-          <button class="dpill" onclick="selectDomain('1secmail.org', this)">@1secmail.org</button>
-          <button class="dpill" onclick="selectDomain('1secmail.net', this)">@1secmail.net</button>
-          <button class="dpill" onclick="selectDomain('esiix.com', this)">@esiix.com</button>
-          <button class="dpill" onclick="selectDomain('wwjmp.com', this)">@wwjmp.com</button>
-          <button class="dpill" onclick="selectDomain('hjvsq.com', this)">@hjvsq.com</button>
-          <button class="dpill" onclick="selectDomain('kzccv.com', this)">@kzccv.com</button>
-          <button class="dpill" onclick="selectDomain('qiott.com', this)">@qiott.com</button>
-        </div>
-
-        <div class="btn-row">
-          <button class="btn btn-accent" onclick="copyEmail()">
-            <i class="fas fa-copy"></i> Copy Email
-          </button>
-          <button class="btn btn-ghost" id="refresh-btn" onclick="checkInbox()">
-            <i class="fas fa-sync-alt"></i> Check Inbox
-          </button>
-          <button class="btn btn-ghost" onclick="addTeamEmail(); switchPage('team')">
-            <i class="fas fa-plus"></i> Add to Team
-          </button>
-          <button class="btn btn-danger" onclick="clearInbox()">
-            <i class="fas fa-trash"></i> Clear
-          </button>
-        </div>
-
-        <div class="timer-row">
-          <i class="fas fa-clock" style="color:var(--muted);font-size:12px"></i>
-          <span class="timer-label">Expires in:</span>
-          <div class="timer-bar"><div class="timer-fill" id="timer-fill"></div></div>
-          <span class="timer-num" id="timer-num">60:00</span>
-        </div>
-      </div>
-
-      <!-- Stats -->
-      <div class="stats-grid fu fu3">
-        <div class="stat-card">
-          <div class="stat-val c-purple" id="stat-generated">0</div>
-          <div class="stat-lbl">Emails Generated</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-val c-green" id="stat-received-card">0</div>
-          <div class="stat-lbl">Emails Received</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-val c-pink" id="stat-unread-card">0</div>
-          <div class="stat-lbl">Unread</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-val c-yellow">INF</div>
-          <div class="stat-lbl">No Limits</div>
-        </div>
-      </div>
-
-      <!-- Inbox + Reader -->
-      <div class="main-grid fu fu4">
-
-        <div class="panel" style="min-height:500px">
-          <div class="panel-head">
-            <div class="panel-title">
-              <i class="fas fa-inbox"></i> Inbox
-              <span class="badge" id="inbox-badge" style="display:none">0</span>
-            </div>
-            <button class="icon-btn" id="refresh-btn" onclick="checkInbox()" title="Refresh inbox">
-              <i class="fas fa-sync-alt"></i>
-            </button>
-          </div>
-          <div class="mail-scroll" id="mail-list">
-            <div class="empty-inbox">
-              <div class="empty-icon-wrap"><i class="fas fa-inbox"></i></div>
-              <p>Your inbox is empty.<br>Use this email address on any website to receive messages here.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel" style="min-height:500px">
-          <div class="reader-empty" id="reader-empty">
-            <div class="big-icon"><i class="fas fa-envelope-open"></i></div>
-            <p>Select an email from<br>your inbox to read it here.</p>
-          </div>
-          <div id="reader-content" style="display:none;flex-direction:column;flex:1;overflow:hidden;"></div>
-        </div>
-
-      </div>
+<!-- HEADER -->
+<header class="hdr fu">
+  <div class="hdr-in">
+    <div class="logo">
+      <div class="logo-mark"><i class="fas fa-envelope"></i></div>
+      Drop<em>Mail</em>
     </div>
+    <nav class="tabs">
+      <button class="tab active" id="tab-inbox" onclick="switchPage('inbox')">
+        <i class="fas fa-inbox"></i> Inbox <span class="tab-count" id="tab-count">0</span>
+      </button>
+      <button class="tab" id="tab-team" onclick="switchPage('team')"><i class="fas fa-users"></i> Team</button>
+      <button class="tab" id="tab-history" onclick="switchPage('history')"><i class="fas fa-history"></i> History</button>
+      <button class="tab" id="tab-settings" onclick="switchPage('settings')"><i class="fas fa-cog"></i> Settings</button>
+    </nav>
+    <div class="live-badge"><span class="live-dot"></span> Live</div>
+  </div>
+</header>
 
-    <!-- PAGE: TEAM -->
-    <div class="page" id="page-team">
-      <div style="padding:28px 0 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-        <div>
-          <div class="hero-chip" style="display:inline-flex;margin-bottom:10px">Team Mode</div>
-          <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800">Manage Multiple Email Addresses</h2>
-          <p style="color:var(--muted);font-size:13px;margin-top:6px">Create and manage separate temporary emails for your entire team — all in one place.</p>
-        </div>
-        <button class="btn btn-accent" onclick="addTeamEmail()">
-          <i class="fas fa-plus"></i> Add New Email
-        </button>
-      </div>
-      <div class="team-grid" id="team-grid"></div>
+<!-- PAGE: INBOX -->
+<div class="page active" id="page-inbox">
+  <div class="hero fu fu1">
+    <div class="chip">Unlimited &nbsp;&middot;&nbsp; Real &nbsp;&middot;&nbsp; Anonymous</div>
+    <h1>Temporary Email<br><span class="grad">Instant Inbox</span></h1>
+    <p>Perfect for your office — no phone number, no signup required. Receive real emails instantly.</p>
+  </div>
+
+  <div class="card fu fu2">
+    <div class="card-top">
+      <div class="card-label">Your Active Email Address</div>
+      <button class="btn btn-g btn-sm" onclick="generateEmail()"><i class="fas fa-random"></i> Generate New</button>
     </div>
-
-    <!-- PAGE: HISTORY -->
-    <div class="page" id="page-history">
-      <div style="padding:28px 0 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-        <div>
-          <div class="hero-chip" style="display:inline-flex;margin-bottom:10px">History</div>
-          <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800">Email History</h2>
-          <p style="color:var(--muted);font-size:13px;margin-top:6px">View and reuse previously generated email addresses.</p>
-        </div>
-        <button class="btn btn-danger" onclick="clearHistory()">
-          <i class="fas fa-trash"></i> Clear History
-        </button>
-      </div>
-      <div class="history-list" id="history-list"></div>
+    <div class="email-box" onclick="copyEmail()" title="Click to copy">
+      <i class="fas fa-envelope"></i>
+      <div class="email-addr"><span id="email-login">generating...</span><span id="email-domain"></span></div>
+      <span class="copy-hint"><i class="fas fa-copy"></i> click to copy</span>
+      <div class="copy-flash" id="copy-flash"></div>
     </div>
+    <div class="dpills">
+      <button class="dp active" onclick="selectDomain('1secmail.com',this)">@1secmail.com</button>
+      <button class="dp" onclick="selectDomain('1secmail.org',this)">@1secmail.org</button>
+      <button class="dp" onclick="selectDomain('1secmail.net',this)">@1secmail.net</button>
+      <button class="dp" onclick="selectDomain('esiix.com',this)">@esiix.com</button>
+      <button class="dp" onclick="selectDomain('wwjmp.com',this)">@wwjmp.com</button>
+      <button class="dp" onclick="selectDomain('hjvsq.com',this)">@hjvsq.com</button>
+      <button class="dp" onclick="selectDomain('kzccv.com',this)">@kzccv.com</button>
+      <button class="dp" onclick="selectDomain('qiott.com',this)">@qiott.com</button>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="copyEmail()"><i class="fas fa-copy"></i> Copy Email</button>
+      <button class="btn btn-g" id="refresh-btn" onclick="checkInbox()"><i class="fas fa-sync-alt"></i> Check Inbox</button>
+      <button class="btn btn-g" onclick="addTeamEmail();switchPage('team')"><i class="fas fa-plus"></i> Add to Team</button>
+      <button class="btn btn-d" onclick="clearInbox()"><i class="fas fa-trash"></i> Clear</button>
+    </div>
+    <div class="timer-row">
+      <i class="fas fa-clock" style="color:var(--muted);font-size:12px"></i>
+      <span class="timer-lbl">Expires in:</span>
+      <div class="timer-bar"><div class="timer-fill" id="timer-fill"></div></div>
+      <span class="timer-num" id="timer-num">60:00</span>
+    </div>
+  </div>
 
-    <!-- PAGE: SETTINGS -->
-    <div class="page" id="page-settings">
-      <div style="padding:28px 0 16px;">
-        <div class="hero-chip" style="display:inline-flex;margin-bottom:10px">Settings</div>
-        <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800">App Settings</h2>
-        <p style="color:var(--muted);font-size:13px;margin-top:6px">Customize the app to fit your workflow.</p>
+  <div class="stats fu fu3">
+    <div class="stat"><div class="stat-v c-b" id="stat-gen">0</div><div class="stat-l">Generated</div></div>
+    <div class="stat"><div class="stat-v c-g" id="stat-recv">0</div><div class="stat-l">Received</div></div>
+    <div class="stat"><div class="stat-v c-r" id="stat-unread">0</div><div class="stat-l">Unread</div></div>
+    <div class="stat"><div class="stat-v c-y">INF</div><div class="stat-l">No Limits</div></div>
+  </div>
+
+  <div class="grid fu fu4">
+    <div class="panel">
+      <div class="panel-h">
+        <div class="panel-t"><i class="fas fa-inbox"></i> Inbox <span class="bdg" id="inbox-bdg" style="display:none">0</span></div>
+        <button class="icon-btn" id="refresh-btn2" onclick="checkInbox()"><i class="fas fa-sync-alt"></i></button>
       </div>
-
-      <div class="settings-page">
-        <div class="settings-section">
-          <div class="settings-title"><i class="fas fa-sync-alt"></i> Auto Refresh</div>
-          <div class="setting-row">
-            <div class="setting-info">
-              <div class="setting-label">Enable Auto Refresh</div>
-              <div class="setting-desc">Automatically check inbox for new emails</div>
-            </div>
-            <button class="toggle on" id="toggle-autoRefresh" onclick="toggleSetting('autoRefresh')"></button>
-          </div>
-          <div class="setting-row">
-            <div class="setting-info">
-              <div class="setting-label">Refresh Interval</div>
-              <div class="setting-desc">How often to check for new emails</div>
-            </div>
-            <select class="select-input" onchange="setRefreshRate(this.value)">
-              <option value="10">Every 10 seconds</option>
-              <option value="15" selected>Every 15 seconds</option>
-              <option value="30">Every 30 seconds</option>
-              <option value="60">Every minute</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="settings-section">
-          <div class="settings-title"><i class="fas fa-hourglass-half"></i> Email Expiry</div>
-          <div class="setting-row">
-            <div class="setting-info">
-              <div class="setting-label">Auto Expire</div>
-              <div class="setting-desc">Automatically generate a new email after expiry</div>
-            </div>
-            <button class="toggle on" id="toggle-autoExpire" onclick="toggleSetting('autoExpire')"></button>
-          </div>
-          <div class="setting-row">
-            <div class="setting-info">
-              <div class="setting-label">Expiry Duration</div>
-              <div class="setting-desc">How long before the email expires</div>
-            </div>
-            <select class="select-input" onchange="setExpireMinutes(this.value)">
-              <option value="30">30 minutes</option>
-              <option value="60" selected>1 hour</option>
-              <option value="120">2 hours</option>
-              <option value="1440">24 hours</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="settings-section">
-          <div class="settings-title"><i class="fas fa-bell"></i> Notifications</div>
-          <div class="setting-row">
-            <div class="setting-info">
-              <div class="setting-label">Browser Notifications</div>
-              <div class="setting-desc">Get notified when a new email arrives</div>
-            </div>
-            <button class="toggle" id="toggle-notifications" onclick="toggleSetting('notifications')"></button>
-          </div>
-        </div>
-
-        <div class="settings-section">
-          <div class="settings-title"><i class="fas fa-info-circle"></i> About</div>
-          <div class="setting-row">
-            <div class="setting-info">
-              <div class="setting-label">DropMail Pro</div>
-              <div class="setting-desc">Powered by 1secMail API — Free, unlimited, no signup required</div>
-            </div>
-            <span style="color:var(--accent);font-size:12px;font-weight:600">v2.0</span>
-          </div>
+      <div class="mail-scroll" id="mail-list">
+        <div class="empty">
+          <div class="empty-ico"><i class="fas fa-inbox"></i></div>
+          <p>Your inbox is empty. Use this email address on any website to receive messages here.</p>
         </div>
       </div>
     </div>
-
-    <footer>
-      DropMail Pro &nbsp;&middot;&nbsp; Powered by <span>1secMail API</span> &nbsp;&middot;&nbsp; Free &middot; Unlimited &middot; No Signup
-    </footer>
-
+    <div class="panel">
+      <div class="reader-empty" id="reader-empty">
+        <div class="big-i"><i class="fas fa-envelope-open"></i></div>
+        <p>Select an email from your inbox to read it here.</p>
+      </div>
+      <div id="reader-content" style="display:none;flex-direction:column;flex:1;overflow:hidden"></div>
+    </div>
   </div>
 </div>
 
-<span id="stat-received" style="display:none">0</span>
-<span id="stat-unread" style="display:none">0</span>
-
-<div class="toast" id="toast">
-  <div class="toast-ic i" id="toast-ic"><i class="fas fa-info"></i></div>
-  <span id="toast-msg"></span>
+<!-- PAGE: TEAM -->
+<div class="page" id="page-team">
+  <div class="pg-hdr">
+    <div>
+      <div class="chip" style="display:inline-flex;margin-bottom:10px">Team Mode</div>
+      <h2>Manage Multiple Emails</h2>
+      <p>Create separate temporary emails for your entire team — all in one place.</p>
+    </div>
+    <button class="btn btn-p" onclick="addTeamEmail()"><i class="fas fa-plus"></i> Add New Email</button>
+  </div>
+  <div class="team-grid" id="team-grid"></div>
 </div>
 
-<script src="app.js"></script>
+<!-- PAGE: HISTORY -->
+<div class="page" id="page-history">
+  <div class="pg-hdr">
+    <div>
+      <div class="chip" style="display:inline-flex;margin-bottom:10px">History</div>
+      <h2>Email History</h2>
+      <p>View and reuse previously generated email addresses.</p>
+    </div>
+    <button class="btn btn-d" onclick="clearHistory()"><i class="fas fa-trash"></i> Clear History</button>
+  </div>
+  <div class="hist-list" id="hist-list"></div>
+</div>
+
+<!-- PAGE: SETTINGS -->
+<div class="page" id="page-settings">
+  <div class="pg-hdr">
+    <div>
+      <div class="chip" style="display:inline-flex;margin-bottom:10px">Settings</div>
+      <h2>App Settings</h2>
+      <p>Customize the app to fit your workflow.</p>
+    </div>
+  </div>
+  <div class="set-wrap">
+    <div class="set-sec">
+      <div class="set-title"><i class="fas fa-sync-alt"></i> Auto Refresh</div>
+      <div class="set-row">
+        <div><div class="set-lbl">Enable Auto Refresh</div><div class="set-desc">Automatically check inbox for new emails</div></div>
+        <button class="toggle on" id="toggle-autoRefresh" onclick="toggleSetting('autoRefresh')"></button>
+      </div>
+      <div class="set-row">
+        <div><div class="set-lbl">Refresh Interval</div><div class="set-desc">How often to check for new emails</div></div>
+        <select class="sel-in" onchange="setRefreshRate(this.value)">
+          <option value="10">Every 10 seconds</option>
+          <option value="15" selected>Every 15 seconds</option>
+          <option value="30">Every 30 seconds</option>
+          <option value="60">Every minute</option>
+        </select>
+      </div>
+    </div>
+    <div class="set-sec">
+      <div class="set-title"><i class="fas fa-hourglass-half"></i> Email Expiry</div>
+      <div class="set-row">
+        <div><div class="set-lbl">Auto Expire</div><div class="set-desc">Generate a new email automatically after expiry</div></div>
+        <button class="toggle on" id="toggle-autoExpire" onclick="toggleSetting('autoExpire')"></button>
+      </div>
+      <div class="set-row">
+        <div><div class="set-lbl">Expiry Duration</div><div class="set-desc">How long before the email expires</div></div>
+        <select class="sel-in" onchange="setExpireMinutes(this.value)">
+          <option value="30">30 minutes</option>
+          <option value="60" selected>1 hour</option>
+          <option value="120">2 hours</option>
+          <option value="1440">24 hours</option>
+        </select>
+      </div>
+    </div>
+    <div class="set-sec">
+      <div class="set-title"><i class="fas fa-bell"></i> Notifications</div>
+      <div class="set-row">
+        <div><div class="set-lbl">Browser Notifications</div><div class="set-desc">Get notified when a new email arrives</div></div>
+        <button class="toggle" id="toggle-notifications" onclick="toggleSetting('notifications')"></button>
+      </div>
+    </div>
+    <div class="set-sec">
+      <div class="set-title"><i class="fas fa-info-circle"></i> About</div>
+      <div class="set-row">
+        <div><div class="set-lbl">DropMail Pro</div><div class="set-desc">Powered by 1secMail API — Free, unlimited, no signup required</div></div>
+        <span style="color:var(--accent);font-size:12px;font-weight:600">v2.0</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>DropMail Pro &nbsp;&middot;&nbsp; Powered by <span>1secMail API</span> &nbsp;&middot;&nbsp; Free &middot; Unlimited &middot; No Signup</footer>
+</div>
+</div>
+
+<div class="toast" id="toast">
+  <div class="t-ic t-i" id="t-ic"><i class="fas fa-info" id="t-fa"></i></div>
+  <span id="t-msg"></span>
+</div>
+
+<script>
+const API='https://www.1secmail.com/api/v1/';
+const DOMAINS=['1secmail.com','1secmail.org','1secmail.net','esiix.com','wwjmp.com','hjvsq.com','kzccv.com','qiott.com'];
+const $=id=>document.getElementById(id);
+const rand=n=>Math.floor(Math.random()*n);
+const randStr=l=>{const c='abcdefghijklmnopqrstuvwxyz0123456789';let s='';for(let i=0;i<l;i++)s+=c[rand(c.length)];return s};
+const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const fmtDate=dt=>{if(!dt)return'';try{const d=new Date(dt.replace?' ':'T'?dt.replace(' ','T'):dt);return d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}catch{return dt}};
+
+let login='',domain='1secmail.com',emails=[],selId=null,history=JSON.parse(localStorage.getItem('dm_h')||'[]'),team=JSON.parse(localStorage.getItem('dm_t')||'[]');
+let settings=JSON.parse(localStorage.getItem('dm_s')||'{"autoRefresh":true,"refreshRate":15,"notifications":true,"autoExpire":true,"expireMinutes":60}');
+let stats=JSON.parse(localStorage.getItem('dm_st')||'{"gen":0,"recv":0}');
+let timerLeft=3600,timerMax=3600,timerInt=null,autoInt=null;
+
+const fullEmail=()=>`${login}@${domain}`;
+const save=()=>{localStorage.setItem('dm_h',JSON.stringify(history));localStorage.setItem('dm_t',JSON.stringify(team));localStorage.setItem('dm_s',JSON.stringify(settings));localStorage.setItem('dm_st',JSON.stringify(stats))};
+
+let toastT;
+function toast(msg,type='i'){
+  const ic={s:'fa-check t-s',e:'fa-times t-e',i:'fa-info t-i'};
+  $('t-ic').className='t-ic '+ic[type].split(' ')[1];
+  $('t-fa').className='fas '+ic[type].split(' ')[0];
+  $('t-msg').textContent=msg;
+  $('toast').classList.add('show');
+  clearTimeout(toastT);
+  toastT=setTimeout(()=>$('toast').classList.remove('show'),3000);
+}
+
+function generateEmail(keepDomain=false){
+  if(!keepDomain)domain=DOMAINS[0];
+  login=randStr(10);
+  emails=[];selId=null;
+  stats.gen++;save();
+  history.unshift({email:fullEmail(),created:new Date().toISOString(),recv:0,id:Date.now()});
+  if(history.length>50)history.pop();
+  save();
+  $('email-login').textContent=login;
+  $('email-domain').textContent='@'+domain;
+  renderList();renderReader();renderHistory();updateStats();resetTimer();
+  if(settings.autoRefresh)startAuto();
+}
+
+function selectDomain(d,el){
+  domain=d;
+  document.querySelectorAll('.dp').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  generateEmail(true);
+  toast('Domain changed to @'+d,'i');
+}
+
+function copyEmail(){
+  navigator.clipboard.writeText(fullEmail()).catch(()=>{const t=document.createElement('textarea');t.value=fullEmail();document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t)});
+  const f=$('copy-flash');f.style.opacity='1';setTimeout(()=>f.style.opacity='0',400);
+  toast('Email copied to clipboard!','s');
+}
+
+async function checkInbox(silent=false){
+  const btn=$('refresh-btn');const btn2=$('refresh-btn2');
+  [btn,btn2].forEach(b=>{if(b)b.querySelector('i').style.animation='spinning 1s linear infinite'});
+  try{
+    const res=await fetch(`${API}?action=getMessages&login=${login}&domain=${domain}`,{cache:'no-store'});
+    if(!res.ok)throw new Error();
+    const data=await res.json();
+    const prev=emails.length;
+    const ids=new Set(emails.map(e=>e.id));
+    emails=data.map(m=>({...m,_read:ids.has(m.id)?(emails.find(e=>e.id===m.id)?._read||false):false}));
+    const newC=emails.filter(m=>!ids.has(m.id)).length;
+    stats.recv=emails.length;save();
+    const h=history.find(x=>x.email===fullEmail());if(h){h.recv=emails.length;save()}
+    if(newC>0&&prev>0&&!silent)toast(newC+' new email'+(newC>1?'s':'')+' arrived!','s');
+    else if(!silent&&emails.length===0)toast('Inbox is empty','i');
+    else if(!silent)toast(emails.length+' email'+(emails.length>1?'s':'')+' in inbox','i');
+    renderList();updateStats();
+  }catch(e){if(!silent)toast('Connection error. Please check your internet.','e')}
+  [btn,btn2].forEach(b=>{if(b)b.querySelector('i').style.animation=''});
+}
+
+function renderList(){
+  const c=$('mail-list');
+  const unread=emails.filter(e=>!e._read).length;
+  const bdg=$('inbox-bdg');
+  bdg.style.display=unread>0?'inline':'none';bdg.textContent=unread;
+  $('tab-count').textContent=emails.length;
+  $('stat-unread').textContent=unread;
+  if(!emails.length){c.innerHTML='<div class="empty"><div class="empty-ico"><i class="fas fa-inbox"></i></div><p>Your inbox is empty. Use this email address on any website to receive messages here.</p></div>';return}
+  c.innerHTML=emails.map(m=>`<div class="mail-item ${m._read?'':'unread'} ${selId===m.id?'active':''}" onclick="openEmail(${m.id})"><div class="m-dot"></div><div class="m-from">${esc(m.from||'Unknown')}</div><div class="m-subj">${esc(m.subject||'(No subject)')}</div><div class="m-time">${fmtDate(m.date)}</div></div>`).join('');
+}
+
+async function openEmail(id){
+  selId=id;const meta=emails.find(e=>e.id===id);if(!meta)return;
+  meta._read=true;renderList();
+  $('reader-empty').style.display='none';
+  const rc=$('reader-content');rc.style.display='flex';
+  rc.innerHTML=`<div class="reader-hdr"><div class="reader-subj">${esc(meta.subject||'(No subject)')}</div><div class="meta-row"><span class="mk">From</span><span class="mv">${esc(meta.from||'')}</span></div><div class="meta-row"><span class="mk">Date</span><span class="mv">${fmtDate(meta.date)}</span></div><div class="meta-row"><span class="mk">To</span><span class="mv" style="color:var(--accent)">${esc(fullEmail())}</span></div><div class="reader-acts"><button class="btn btn-d btn-sm" onclick="delEmail(${id})"><i class="fas fa-trash"></i> Delete</button></div></div><div class="reader-body" id="rbody"><div style="display:flex;align-items:center;gap:8px;color:var(--muted)"><div class="spin"></div> Loading...</div></div>`;
+  try{
+    const res=await fetch(`${API}?action=readMessage&login=${login}&domain=${domain}&id=${id}`);
+    const d=await res.json();const rb=$('rbody');
+    if(d.htmlBody)rb.innerHTML=`<div style="background:rgba(255,255,255,0.02);border-radius:10px;padding:16px">${sanitize(d.htmlBody)}</div>`;
+    else if(d.textBody)rb.innerHTML=`<pre style="white-space:pre-wrap;font-family:'Inter',sans-serif;font-size:13px">${esc(d.textBody)}</pre>`;
+    else rb.innerHTML='<span style="color:var(--muted)">No content found.</span>';
+  }catch{$('rbody').innerHTML='<span style="color:var(--accent2)">Failed to load email. Please try again.</span>'}
+}
+
+function sanitize(h){return h.replace(/<script[\s\S]*?<\/script>/gi,'').replace(/on\w+="[^"]*"/gi,'').replace(/javascript:/gi,'')}
+function renderReader(){$('reader-empty').style.display='flex';$('reader-content').style.display='none';$('reader-content').innerHTML=''}
+function delEmail(id){emails=emails.filter(e=>e.id!==id);selId=null;renderList();renderReader();toast('Email deleted','i')}
+function clearInbox(){emails=[];selId=null;renderList();renderReader();updateStats();toast('Inbox cleared','i')}
+
+function updateStats(){$('stat-gen').textContent=stats.gen;$('stat-recv').textContent=stats.recv}
+
+function resetTimer(){timerMax=settings.expireMinutes*60;timerLeft=timerMax;clearInterval(timerInt);if(settings.autoExpire)startTimer();updateTimer()}
+function startTimer(){timerInt=setInterval(()=>{timerLeft--;updateTimer();if(timerLeft<=0){clearInterval(timerInt);toast('Email expired! Generating new one...','i');generateEmail()}},1000)}
+function updateTimer(){const m=String(Math.floor(timerLeft/60)).padStart(2,'0'),s=String(timerLeft%60).padStart(2,'0');$('timer-num').textContent=`${m}:${s}`;const p=(timerLeft/timerMax)*100,f=$('timer-fill');f.style.width=p+'%';f.style.background=p>60?'#00ff88':p>25?'#ffaa00':'#ff2d55'}
+function startAuto(){clearInterval(autoInt);autoInt=setInterval(()=>checkInbox(true),settings.refreshRate*1000)}
+
+function renderHistory(){
+  const c=$('hist-list');
+  if(!history.length){c.innerHTML='<div class="empty"><div class="empty-ico"><i class="fas fa-history"></i></div><p>No history yet.</p></div>';return}
+  c.innerHTML=history.map(h=>`<div class="hist-item"><div><div class="hist-email">${esc(h.email)}</div><div class="hist-meta">${fmtDate(h.created)} &middot; ${h.recv} emails received</div></div><div style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="navigator.clipboard.writeText('${esc(h.email)}');toast('Copied!','s')"><i class="fas fa-copy"></i></button><button class="btn btn-g btn-sm" onclick="useHist('${esc(h.email)}')"><i class="fas fa-redo"></i> Use</button></div></div>`).join('');
+}
+function useHist(email){const[l,d]=email.split('@');login=l;domain=d;emails=[];selId=null;$('email-login').textContent=l;$('email-domain').textContent='@'+d;renderList();renderReader();switchPage('inbox');toast('Email restored: '+email,'s');checkInbox()}
+function clearHistory(){history=[];save();renderHistory();toast('History cleared','i')}
+
+function addTeamEmail(){const l=randStr(10),d=DOMAINS[rand(DOMAINS.length)];const e={id:Date.now(),name:'Inbox '+(team.length+1),login:l,domain:d,email:`${l}@${d}`,created:new Date().toISOString()};team.push(e);save();renderTeam();toast('New team email: '+e.email,'s')}
+function removeTeam(id){team=team.filter(t=>t.id!==id);save();renderTeam()}
+function useTeam(id){const t=team.find(x=>x.id===id);if(!t)return;login=t.login;domain=t.domain;emails=[];selId=null;$('email-login').textContent=t.login;$('email-domain').textContent='@'+t.domain;renderList();renderReader();switchPage('inbox');toast('Switched to: '+t.email,'s');checkInbox()}
+function renderTeam(){
+  const g=$('team-grid');
+  if(!team.length){g.innerHTML='<div class="empty" style="grid-column:1/-1"><div class="empty-ico"><i class="fas fa-users"></i></div><p>No team emails yet.<br>Add emails for your team members.</p></div>';return}
+  g.innerHTML=team.map(t=>`<div class="team-card ${t.email===fullEmail()?'ac':''}"><div class="team-hdr"><div class="team-name">${esc(t.name)}</div><button class="icon-btn" onclick="removeTeam(${t.id})"><i class="fas fa-times"></i></button></div><div class="team-email">${esc(t.email)}</div><div class="btn-row" style="margin-top:12px"><button class="btn btn-g btn-sm" onclick="navigator.clipboard.writeText('${esc(t.email)}');toast('Copied!','s')"><i class="fas fa-copy"></i> Copy</button><button class="btn btn-p btn-sm" onclick="useTeam(${t.id})"><i class="fas fa-sign-in-alt"></i> Use</button></div></div>`).join('');
+}
+
+function toggleSetting(k){settings[k]=!settings[k];save();applySettings();if(k==='autoRefresh'){if(settings[k])startAuto();else clearInterval(autoInt)}}
+function setRefreshRate(v){settings.refreshRate=parseInt(v);save();if(settings.autoRefresh)startAuto()}
+function setExpireMinutes(v){settings.expireMinutes=parseInt(v);resetTimer();save()}
+function applySettings(){['autoRefresh','autoExpire','notifications'].forEach(k=>{const el=$('toggle-'+k);if(el)el.className='toggle'+(settings[k]?' on':'')})}
+
+function switchPage(p){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  $('page-'+p).classList.add('active');
+  $('tab-'+p).classList.add('active');
+}
+
+function init(){
+  applySettings();generateEmail();
+  setTimeout(()=>checkInbox(true),1500);
+  if(settings.autoRefresh)startAuto();
+}
+
+window.addEventListener('DOMContentLoaded',init);
+</script>
 </body>
 </html>
